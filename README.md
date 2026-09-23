@@ -1,39 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Bitcoin Standard — static newsletter signup
 
-## Live sample 
-Open https://buidace-newsletter.vercel.app/
+A single-page landing site that notifies you on Telegram when someone subscribes. No database, no admin dashboard. Built for free hosting on Netlify.
 
-## Getting Started
+## Stack
 
-First, run the development server:
+- Vite + React (static frontend)
+- One Netlify Function that calls the Telegram Bot API
+
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Frontend runs at `http://localhost:5173`. Without Netlify Dev, `/api/subscribe` will fail unless you also run the function (see below).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Test the Telegram function locally
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Copy `.env.example` to `.env` and fill in:
 
-## Learn More
+   - `TELEGRAM_BOT_TOKEN` — from [@BotFather](https://t.me/BotFather)
+   - `TELEGRAM_CHAT_ID` — message your bot once, then get your numeric ID via [@userinfobot](https://t.me/userinfobot) or Telegram `getUpdates`
 
-To learn more about Next.js, take a look at the following resources:
+2. Install the Netlify CLI if needed: `npm i -g netlify-cli`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Run:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   netlify dev
+   ```
 
-## Deploy on Vercel
+   This serves the site and the function together (usually on port 8888).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy to Netlify
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push this repo to GitHub.
+2. In Netlify: **Add new site → Import from Git**.
+3. Build settings are already in `netlify.toml`:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+   - Functions: `netlify/functions`
+4. Under **Site settings → Environment variables**, add:
+   - `TELEGRAM_BOT_TOKEN`
+   - `TELEGRAM_CHAT_ID`
+5. Deploy. Subscribe submissions POST to `/api/subscribe`, which is redirected to the function.
+
+## How signup works
+
+1. Visitor enters an email on the landing page.
+2. Browser `POST`s `{ "email": "..." }` to `/api/subscribe`.
+3. The Netlify Function validates the email and sends you a Telegram message:
+
+   `New newsletter signup: someone@example.com`
+
+Emails are not stored anywhere — only the Telegram notification is sent.
