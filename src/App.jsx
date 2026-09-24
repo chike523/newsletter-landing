@@ -75,14 +75,30 @@ export default function App() {
         <h1 className="title">The Bitcoin Standard</h1>
 
         <p className="description">
-          Insights on Bitcoin as digital property, monetary inflation,
-          macroeconomics, and the future of money from the Executive Chairman
-          of MicroStrategy and advocate of the Bitcoin Standard.
+        Analyzing #bitcoin at the highest level through cycle analysis, market dynamics, data-driven insights, and probabilistic forecasts. Focused on understanding the market and making money.
         </p>
 
         <p className="byline">
-          By Michael J. Saylor · Over 250,000 subscribers
+          By KillaXBT · Over 17,000 subscribers
         </p>
+
+        <div className="contact">
+          <h2 className="contact-heading">Got a question? Let’s talk.</h2>
+          <p>
+            Whether it’s something from one of our videos, a question about
+            trading or the markets, or you’re simply not sure where to start,
+            feel free to reach out.
+          </p>
+          <a
+            className="contact-btn"
+            href="https://t.me/killaaXBT"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Send us a DM
+          </a>
+          <p className="contact-note">We’d love to hear from you.</p>
+        </div>
 
         <div className="form-row">
           <div className="field">
