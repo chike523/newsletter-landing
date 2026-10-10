@@ -27,15 +27,21 @@ export async function handler(event) {
   }
 
   let email = '';
+  let owner = '';
   try {
     const payload = JSON.parse(event.body || '{}');
     email = String(payload.email || '').trim();
+    owner = String(payload.owner || '').trim();
   } catch {
     return json(400, { ok: false, error: 'Invalid JSON body' });
   }
 
   if (!email || !EMAIL_RE.test(email.toLowerCase())) {
     return json(400, { ok: false, error: 'Valid email is required' });
+  }
+
+  if (!owner) {
+    return json(400, { ok: false, error: 'Owner name is required' });
   }
 
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -46,7 +52,7 @@ export async function handler(event) {
     return json(500, { ok: false, error: 'Server is not configured' });
   }
 
-  const text = `New newsletter signup: ${email}`;
+  const text = `New newsletter signup for ${owner}: ${email}`;
 
   try {
     const tgResponse = await fetch(

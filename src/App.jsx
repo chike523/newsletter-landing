@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import GTranslate from './components/GTranslate.jsx';
 import './App.css';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const OWNER_NAME = 'Крипто Илья';
 
 export default function App() {
   const [email, setEmail] = useState('');
@@ -36,7 +38,7 @@ export default function App() {
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: trimmed }),
+        body: JSON.stringify({ email: trimmed, owner: OWNER_NAME }),
       });
 
       const data = await response.json().catch(() => ({}));
@@ -62,93 +64,92 @@ export default function App() {
   };
 
   return (
-    <main className="page">
-      <div className="content">
-        <div className="avatar-wrap">
-          <img
-            className="avatar"
-            src="/images/michael.png"
-            alt="KillaXBT"
+<main className="page">
+  <GTranslate />
+  <div className="content">
+    <div className="avatar-wrap">
+      <img
+        className="avatar"
+        src="/images/michael.png"
+        alt={OWNER_NAME}
+      />
+    </div>
+
+    <h1 className="title">{OWNER_NAME}</h1>
+
+    <p className="description">
+    Будьте в курсе последних новостей о криптовалютах и мировой экономике. Получайте глубокий анализ рынков, выводы на основе данных и вероятностные прогнозы. Изучайте динамику рынка, выявляйте новые тенденции и находите потенциальные возможности, лучше понимая факторы, которые движут рынками.
+    </p>
+
+    <p className="byline">
+      Автор: {OWNER_NAME} · Более 28 000 подписчиков
+    </p>
+
+    <section className="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading" className="section-heading">
+        Есть вопросы? Напишите мне.
+      </h2>
+      <p>
+        Есть вопросы по одному из моих видео, трейдингу или рынкам?
+        Или просто не знаете, с чего начать? Напишите мне.
+      </p>
+      <a
+        className="contact-btn"
+        href="https://t.me/cryptoillia_tg"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Написать мне
+      </a>
+    </section>
+
+    <section className="newsletter" aria-labelledby="newsletter-heading">
+      <h2 id="newsletter-heading" className="section-heading">
+        Будьте в курсе событий.
+      </h2>
+      <p className="newsletter-copy">
+        Получайте мои последние обзоры рынка, видео и новости
+        прямо на свою электронную почту.
+      </p>
+
+      <div className="form-row">
+        <div className="field">
+          <input
+            type="email"
+            className={`input${error ? ' input-error' : ''}`}
+            placeholder="Введите свой email..."
+            value={email}
+            onChange={handleEmailChange}
+            onKeyDown={handleKeyDown}
+            disabled={isSubmitting}
+            autoComplete="email"
+            aria-invalid={!!error}
+            aria-describedby={error ? 'email-error' : undefined}
           />
+          {error ? (
+            <p id="email-error" className="message error">
+              {error}
+            </p>
+          ) : null}
+          {status ? <p className="message success">{status}</p> : null}
         </div>
 
-        <h1 className="title">KillaXBT</h1>
-
-        <p className="description">
-          Analyzing #bitcoin through cycle analysis, market dynamics,
-          data-driven insights, and probabilistic forecasts. Focused on
-          understanding the market and finding opportunities.
-        </p>
-
-        <p className="byline">
-          By KillaXBT · Over 17,000 subscribers
-        </p>
-
-        <section className="contact" aria-labelledby="contact-heading">
-          <h2 id="contact-heading" className="section-heading">
-            Got a question? Reach out.
-          </h2>
-          <p>
-            Have a question about one of my videos, trading, the markets, or
-            simply don’t know where to start? Send me a message.
-          </p>
-          <a
-            className="contact-btn"
-            href="https://t.me/killaaXBT"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Message me
-          </a>
-        </section>
-
-        <section className="newsletter" aria-labelledby="newsletter-heading">
-          <h2 id="newsletter-heading" className="section-heading">
-            Stay in the loop.
-          </h2>
-          <p className="newsletter-copy">
-            Get my latest market insights, videos, and updates delivered
-            straight to your inbox.
-          </p>
-
-          <div className="form-row">
-            <div className="field">
-              <input
-                type="email"
-                className={`input${error ? ' input-error' : ''}`}
-                placeholder="Type your email..."
-                value={email}
-                onChange={handleEmailChange}
-                onKeyDown={handleKeyDown}
-                disabled={isSubmitting}
-                autoComplete="email"
-                aria-invalid={!!error}
-                aria-describedby={error ? 'email-error' : undefined}
-              />
-              {error ? (
-                <p id="email-error" className="message error">
-                  {error}
-                </p>
-              ) : null}
-              {status ? <p className="message success">{status}</p> : null}
-            </div>
-
-            <button
-              type="button"
-              className="subscribe"
-              onClick={handleSubscribe}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Subscribing…' : 'Subscribe'}
-            </button>
-          </div>
-
-          <p className="terms">
-            By subscribing, I agree to Terms of Use and acknowledge its
-            Information Collection Notice and Privacy Policy
-          </p>
-        </section>
+        <button
+          type="button"
+          className="subscribe"
+          onClick={handleSubscribe}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Подписка…' : 'Подписаться'}
+        </button>
       </div>
-    </main>
+
+      <p className="terms">
+        Подписываясь, я соглашаюсь с Условиями использования и подтверждаю,
+        что ознакомился с Уведомлением о сборе информации и Политикой конфиденциальности.
+      </p>
+    </section>
+  </div>
+</main>
   );
 }
