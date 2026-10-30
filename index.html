@@ -1,19 +1,51 @@
 <!doctype html>
-<html lang="ru">
+<html lang="pt">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Крипто Илья</title>
+    <title>Hannah Guarilha</title>
     <meta
       name="description"
-      content="Analyzing #bitcoin through cycle analysis, market dynamics, data-driven insights, and probabilistic forecasts."
+      content="Mercado financeiro de forma simples e descomplicada. Aprenda a investir com segurança e tomar suas próprias decisões."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <style>
+      .gtranslate-bar {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 1000;
+      }
+      .gtranslate-bar select,
+      .gtranslate-bar .gt_selector {
+        background: #171923;
+        color: #e2e8f0;
+        border: 1px solid #2d3748;
+        border-radius: 0.375rem;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.85rem;
+      }
+    </style>
   </head>
   <body>
+    <div class="gtranslate-bar" aria-label="Language">
+      <div class="gtranslate_wrapper"></div>
+    </div>
     <div id="root"></div>
+    <script>
+      window.gtranslateSettings = {
+        default_language: 'pt',
+        native_language_names: true,
+        detect_browser_language: false,
+        languages: ['pt', 'en', 'es', 'fr', 'de', 'it'],
+        wrapper_selector: '.gtranslate_wrapper',
+        flag_style: '3d',
+        alt_flags: { en: 'usa', pt: 'br' },
+      };
+    </script>
+    <script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
